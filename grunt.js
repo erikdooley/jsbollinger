@@ -1,17 +1,20 @@
-module.exports = function(grunt){
+/*global module:false, grunt: false*/
+/*jslint nomen:true*/
+module.exports = function (grunt) {
+	"use strict";
 	grunt.initConfig({
 		lint: {
-			files: ["grunt.js", "assets/js/**/*.src.js", "assets/js/**/*.spec.js", "assets/css/**/*.css"]
+			files: ["grunt.js", "assets/js/**/*.src.js", "assets/js/**/*.spec.js"]
 		},
 		watch: {
 			scripts: {
 				files: "<config:lint.files>",
-				tasks: "lint"
+				tasks: "lint jasmine"
 			}
 		},
 		jasmine: {
 			all: {
-				src:['assets/js/specs/SpecRunner.html'],
+				src: ['assets/js/specs/SpecRunner.html'],
 				errorReporting: true
 			}
 		},
@@ -34,18 +37,18 @@ module.exports = function(grunt){
 			globals: {
 				$: true,
 				jQuery: true,
-				Backbone:true,
-				_:true,
+				Backbone: true,
+				_: true,
 				requirejs: true,
 				window: true,
-				define:true,
-				require:true,
+				define: true,
+				require: true,
 				d3: true
 			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-jasmine-task');
-	
+
 	grunt.registerTask('default', 'lint');
 };
