@@ -1,12 +1,12 @@
 module.exports = function(grunt){
 	grunt.initConfig({
 		lint: {
-			files: ["grunt.js", "assets/js/**/*.src.js", "assets/js/**/*.spec.js"]
+			files: ["grunt.js", "assets/js/**/*.src.js", "assets/js/**/*.spec.js", "assets/css/**/*.css"]
 		},
 		watch: {
 			scripts: {
 				files: "<config:lint.files>",
-				tasks: "lint jasmine"
+				tasks: "lint"
 			}
 		},
 		jasmine: {
@@ -39,12 +39,13 @@ module.exports = function(grunt){
 				requirejs: true,
 				window: true,
 				define:true,
-				require:true
+				require:true,
+				d3: true
 			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-jasmine-task');
-
+	
 	grunt.registerTask('default', 'lint');
 };

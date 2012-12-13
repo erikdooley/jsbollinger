@@ -1,5 +1,5 @@
 require.config({
-  base_url: "./",
+  base_url: "/jsbollinger",
   paths: {
     /*Libraries*/
     'jquery': 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',

@@ -1,7 +1,17 @@
-/*global define:true, describe:true, it:true, expect:true, console:true*/
+/*global define:true, describe:true, it:true, expect:true, console:true, beforeEach: true, afterEach:true, runs:true, waitsFor:true*/
 define(function(require){
   "use strict";
   var collection = require("../src/collections/collection.dataset.src.js");
+  beforeEach(function(){
+    for(var i=0; i < 100; i++){
+      collection.add({
+        "high": i
+      });
+    }
+  });
+  afterEach(function(){
+    collection.reset();
+  });
 
   describe("A suite", function() {
     it("contains spec with an expectation", function() {
@@ -13,36 +23,30 @@ define(function(require){
     it("should have a fetch method", function(){
       expect(typeof collection.fetch).toEqual("function");
     });
-    it("should have a process csv method", function(){
-      expect(typeof collection.processCsv).toEqual("function");
-    });
-    it("when given a csv text string it should return an array", function(){
-      var scvjson = [
-            {
-              "Date": "2012-11-16",
-              "Open": "10.58",
-              "High": "10.64"
-            },
-            {
-              "Date": "2012-11-15",
-              "Open": "10.57",
-              "High": "10.8"
-            }
-          ];
-      var options = {};
-      options.url = "../../data/ford.csv";
-      options.success = function(collection,data,options){console.log(data);};
-      options.error = function(collection,xhr,options){console.log("error",xhr);};
-      console.log(options);
-      collection.fetch(options);
-      // $.ajax({
-      //   url: ,
-      //   success: function(data){
-      //     console.log(collection.processCsv(data));
-      //     expect(collection.processCsv(data)).toEqual(scvjson);
-      //   }
-      // });
-      
+    describe("makeAverage method", function(){
+      it("should be a function", function(){
+        expect(typeof collection.makeAverage).toEqual("function");
+      });
+      it("should throw an error if the property does not exist in the underlying model", function(){
+        expect(function(){collection.makeAverage(5, "test");}).toThrow(new Error("test property can not be found on collection model"));
+      });
+      it("should create a new property in the underlying model with namespace average_n", function(){
+        
+        collection.makeAverage(5, "high");
+        expect(collection.at(Math.floor(Math.random()*collection.length)).has("average_"+5)).toBe(true);
+        
+        // runs(function(){
+        //   collection.makeAverage(5, "high");
+        // });
+        
+        // waitsFor(function(){
+        //   return collection.at(99).has("average_"+5);
+        // }, "time out", 1000);
+        // runs(function(){
+        //   expect(collection.at(Math.floor(Math.random()*collection.length)).has("average_"+5)).toBe(true);
+        // });
+        
+      });
     });
   });
 });

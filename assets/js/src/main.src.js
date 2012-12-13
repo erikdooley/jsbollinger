@@ -5,6 +5,8 @@ requirejs.config({
 	paths: {
 		/*Libraries*/
 		'zepto'    : '../libs/zepto.min',
+    'jquery'    : '../libs/jquery-1.8.3',
+    'jqueryui'  : '../libs/jquery-ui-1.9.2.custom.min',
     'd3'        : '../libs/d3.v2.min',
     'backbone'  : '../libs/backbone-min',
     'underscore': '../libs/underscore-min',
@@ -17,8 +19,11 @@ requirejs.config({
       exports: "_"
     },
     'backbone': {
-      deps: ['underscore', 'zepto', 'd3'],
+      deps: ['underscore', 'jquery', 'jqueryui', 'd3'],
       exports: 'Backbone'
+    },
+    'jqueryui' : {
+      deps: ['jquery']
     },
     'd3': {
       exports: "d3"
@@ -30,7 +35,7 @@ requirejs.config({
   }
 });
 
-require(['zepto', 'underscore', 'views/view.app.src'], function ($, _, App) {
+require(['jquery', 'underscore', 'views/view.app.src'], function ($, _, App) {
 	"use strict";
 
   var app = new App();
