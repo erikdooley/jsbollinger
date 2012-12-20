@@ -33,9 +33,9 @@ define(function (require) {
 				}
 
 				this.at(0).set("average_" + n + "_" + property, this.at(0).get(property), {silent: true});
-				// firstModel.set("average"+n, firstModel.get("High"), {silent: true});
+
 				for (i = 1, l = this.models.length; i < l; i = i + 1) {
-			
+
 					if (i < n) {
 						tmp = (this.at(i - 1).get("average_" + n + "_" + property) * (i) + this.at(i).get(property)) / (i + 1);
 					} else {

@@ -4,6 +4,7 @@ require.config({
 	paths: {
 		/*Libraries*/
 		'jquery': 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
+		'jqueryui': '../libs/jquery-ui-1.9.2.custom.min',
 		'backbone': '../libs/backbone-min',
 		'underscore': '../libs/underscore-min',
 		'd3': '../libs/d3.v2.min',
@@ -14,8 +15,11 @@ require.config({
 		'underscore': {
 			exports: "_"
 		},
+		'jqueryui': {
+			deps: ['jquery']
+		},
 		'backbone': {
-			deps: ['underscore', 'jquery', 'd3'],
+			deps: ['underscore', 'jquery', 'jqueryui', 'd3'],
 			exports: 'Backbone'
 		},
 		'd3': {
