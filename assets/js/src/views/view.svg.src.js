@@ -16,9 +16,9 @@ define(function (require) {
 				},
 				margins: {
 					top: 10,
-					right: 20,
+					right: 60,
 					bottom: 30,
-					left: 60
+					left: 20
 				}
 			},
 
@@ -30,8 +30,8 @@ define(function (require) {
 
 				this.el = d3.select(context)
 					.append("svg")
-					.attr("height", this.chartDimensions.height)
-					.attr("width", this.chartDimensions.width)
+					.attr("height", this.options.containerDimensions.height)
+					.attr("width", this.options.containerDimensions.width)
 					.append("g")
 					.attr("transform", "translate(" + this.options.margins.left + "," + this.options.margins.top + ")")
 					.attr("id", "chart");
@@ -94,7 +94,7 @@ define(function (require) {
 			},
 
 			adjustXAxis: function (params) {
-				this.xScale.domain([this.dataset.at(+params.max).get("Date"), this.dataset.at(+params.min).get("Date")]);
+				this.xScale.domain([this.dataset.at(this.dataset.models.length - params.min -1).get("Date"), this.dataset.at(this.dataset.models.length - params.max).get("Date")]);
 				d3.select(".x.axis").call(this.xAxis);
 				d3.select("#stock path").attr("d", this.line(this.dataset.models));
 			}
