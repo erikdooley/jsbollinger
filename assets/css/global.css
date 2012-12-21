@@ -35,7 +35,7 @@ path.area {
 
 .xAxisSlider {
 	width: 820px;
-	margin: 20px;
+	margin: 20px 0 0 60px;
 }
 
 .y.axis line, .y.axis path {
@@ -44,5 +44,5 @@ path.area {
 }
 
 #stock path {
-	fill: none;
+	fill: rgba(200, 200, 200, 0.5);
 }

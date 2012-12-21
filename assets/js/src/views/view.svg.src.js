@@ -16,9 +16,9 @@ define(function (require) {
 				},
 				margins: {
 					top: 10,
-					right: 60,
+					right: 20,
 					bottom: 30,
-					left: 20
+					left: 60
 				}
 			},
 
@@ -67,7 +67,8 @@ define(function (require) {
 				this.yAxis = d3.svg.axis()
 					.scale(this.yScale)
 					.ticks(4)
-					.orient("right");
+					.tickSize(-this.chartDimensions.width)
+					.orient("left");
 
 				this.el.append("g")
 					.attr("class", "x axis")
@@ -76,27 +77,40 @@ define(function (require) {
 
 				this.el.append("g")
 					.attr("class", "y axis")
-					.attr("transform", "translate(" + this.chartDimensions.width + " , 0)")
 					.call(this.yAxis);
+
+				return this;
 			},
 			creategraph: function (dataset) {
-				this.line = d3.svg.line()
+				this.area = d3.svg.area()
 					.x(function (d) {return this.xScale(d.get("Date")); })
-					.y(function (d) {return this.yScale(d.get("High")); })
+					.y0(this.chartDimensions.height)
+					.y1(function (d) {return this.yScale(d.get("High")); })
 					.interpolate("linear");
 
-				this.linegraph = d3.select("#chart")
+				this.clipmask = d3.select('#chart')
+					.append('clipPath')
+						.attr('id', 'clip')
+					.append('rect')
+						.attr('width', this.chartDimensions.width)
+						.attr('height', this.chartDimensions.height);
+
+
+				this.areagraph = d3.select('#chart')
 					.append("g")
 					.attr("id", "stock");
 
-				this.linegraph.append("path")
-					.attr("d", this.line(dataset.models));
+				this.areagraph.append("path")
+					.attr("clip-path", "url(#clip)")
+					.attr("d", this.area(dataset.models));
+
+				return this;
 			},
 
 			adjustXAxis: function (params) {
-				this.xScale.domain([this.dataset.at(this.dataset.models.length - params.min -1).get("Date"), this.dataset.at(this.dataset.models.length - params.max).get("Date")]);
+				this.xScale.domain([this.dataset.at(this.dataset.models.length - params.min - 1).get("Date"), this.dataset.at(this.dataset.models.length - params.max).get("Date")]);
 				d3.select(".x.axis").call(this.xAxis);
-				d3.select("#stock path").attr("d", this.line(this.dataset.models));
+				d3.select("#stock path").attr("d", this.area(this.dataset.models));
 			}
 		});
 
