@@ -11,14 +11,14 @@ define(function (require) {
 
 			options: {
 				containerDimensions: {
-					width: 900,
+					width: 700,
 					height: 400
 				},
 				margins: {
 					top: 10,
 					right: 20,
 					bottom: 30,
-					left: 60
+					left: 20
 				}
 			},
 

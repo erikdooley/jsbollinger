@@ -3,7 +3,7 @@ define(function (require) {
 	"use strict";
 	var Backbone = require("backbone"),
 		Controls = Backbone.View.extend({
-			el: 'body',
+			el: '.primary',
 			init: function (dataset) {
 				var xAxisControlsOptions = {
 					min: 0,

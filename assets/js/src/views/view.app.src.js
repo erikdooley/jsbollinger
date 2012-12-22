@@ -10,13 +10,14 @@ define(function (require) {
 
 
 			initialize: function () {
-				svgview.setup(this.el);
+				svgview.setup('.primary');
 				this.subscribeListeners();
 			},
 
 			render: function () {
-				svgview.createaxis(dataset);
-				svgview.creategraph(dataset);
+				svgview.createaxis(dataset)
+					.creategraph(dataset);
+				
 				controlsview.init(dataset);
 			},
 
