@@ -11,11 +11,15 @@ requirejs.config({
 		'd3'        : '../libs/d3.v2.min',
 		'backbone'  : '../libs/backbone-min',
 		'underscore': '../libs/underscore-min',
+		'text': '../libs/text',
 
 		/*App*/
 		'app': 'app.src'
 	},
 	shim: {
+		'jquery' : {
+			exports: '$'
+		},
 		'underscore': {
 			exports: "_"
 		},

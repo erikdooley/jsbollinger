@@ -1,6 +1,7 @@
 /*global define: false, Backbone:false, $: true, console: false*/
 define(function (require) {
 	"use strict";
+
 	var Backbone = require("backbone"),
 		Controls = Backbone.View.extend({
 			el: '.primary',

@@ -15,7 +15,7 @@ define(function (require) {
 					height: 400
 				},
 				margins: {
-					top: 10,
+					top: 20,
 					right: 20,
 					bottom: 30,
 					left: 20

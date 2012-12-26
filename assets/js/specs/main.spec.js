@@ -7,13 +7,17 @@ require.config({
 		'jqueryui': '../libs/jquery-ui-1.9.2.custom.min',
 		'backbone': '../libs/backbone-min',
 		'underscore': '../libs/underscore-min',
+		'text': '../libs/text',
 		'd3': '../libs/d3.v2.min',
 
 		'app': "app.spec"
 	},
 	shim: {
+		'jquery': {
+			exports: '$'
+		},
 		'underscore': {
-			exports: "_"
+			exports: '_'
 		},
 		'jqueryui': {
 			deps: ['jquery']
@@ -23,7 +27,7 @@ require.config({
 			exports: 'Backbone'
 		},
 		'd3': {
-			exports: "d3"
+			exports: 'd3'
 		},
 		'app' : {
 			deps: ['backbone'],

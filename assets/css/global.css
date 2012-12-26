@@ -8,6 +8,10 @@ svg {
 	background: #ffffff;
 }
 
+h1 {
+	font-size: 3em;
+}
+
 /**
 * Layout stuff
 */
@@ -19,6 +23,8 @@ svg {
 .secondary {
 	width:33%;
 	display: inline-block;
+	vertical-align: top;
+	margin-top: 20px;
 }
 
 

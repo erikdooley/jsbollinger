@@ -20,6 +20,7 @@ define(["jquery"], function ($) {
 
 			specs.push('./collections/collection.dataset.spec');
 			specs.push('./views/view.controls.spec');
+			specs.push('./views/view.options.spec')
 
 			$(function(){
 				require(specs, function(){

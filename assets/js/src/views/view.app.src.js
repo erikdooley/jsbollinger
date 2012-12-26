@@ -5,6 +5,7 @@ define(function (require) {
 	var dataset = require('collections/collection.dataset.src'),
 		svgview = require('views/view.svg.src'),
 		controlsview  = require('views/view.controls.src'),
+		optionsView = require('views/view.options.src'),
 		AppView = Backbone.View.extend({
 			el: "body",
 
@@ -17,7 +18,9 @@ define(function (require) {
 			render: function () {
 				svgview.createaxis(dataset)
 					.creategraph(dataset);
-				
+
+				optionsView.init('.secondary');
+
 				controlsview.init(dataset);
 			},
 
