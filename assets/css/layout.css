@@ -1,0 +1,18 @@
+body {
+	font: 10px sans-serif;
+	margin: 0;
+	padding: 30px;
+	background: rgb(245, 245, 245);
+}
+h1 {
+	font-size: 3em;
+}
+.primary {
+	width: 66%;
+	display: inline-block;
+}
+.secondary {
+	width:33%;
+	display: inline-block;
+	vertical-align: top;
+}

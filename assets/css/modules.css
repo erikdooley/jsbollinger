@@ -1,0 +1,35 @@
+.xAxisSlider {
+	width: 660px;
+	margin: 20px 0 0 20px;
+}
+.xAxisSlider .ui-slider-range {
+	background-image: none;
+	background: rgba(200, 200, 230, 1);
+}
+.xAxisSlider .ui-slider-handle {
+	outline: none;
+}
+.xAxisSlider .ui-state-active {
+	background-color: #000;
+}
+
+.options {
+	background: #fff;
+	padding: 20px;
+}
+
+.options h2 {
+	margin-top: 0;
+}
+.options section {
+	border-bottom: 1px solid #ccc;
+	padding: 20px 0 0 0;
+}
+.options .ui-button {
+	margin-bottom: 20px;
+}
+.options .ui-slider {
+	display: none;
+	margin-bottom: 20px
+}
+

@@ -11,18 +11,36 @@ define(function (require) {
 			init: function (context) {
 				this.context = context;
 				this.render()
-					.applyUI();
+					.applyUI()
+					.bindListeners();
 			},
 
 			render: function () {
-				$(this.context).append(_.template(optionsTemplate));
+				this.view = _.template(optionsTemplate);
+				$(this.context).append(this.view);
 				return this;
 			},
 
 			applyUI: function () {
-				$("input", $(this.context)).button();
+				$("input", $(this.view)).button();
+				$("[id*='slider']").slider();
+				return this;
+			},
+
+			buttonHandler: function (ev) {
+				$(".ui-slider", $(ev.target).parent()).slideToggle(200);
+			},
+
+			sliderHandler: function (ev, ui) {
+				console.log("blah slider", ev.target, ui);
+			},
+
+			bindListeners: function () {
+				$("input", $(this.view)).on("change", $.proxy(this.buttonHandler, this));
+				$(".ui-slider").on("slide", $.proxy(this.sliderHandler, this));
 				return this;
 			}
+
 		});
 
 	return new OptionsView();
