@@ -36,16 +36,19 @@ define(function (require) {
 					.attr("transform", "translate(" + this.options.margins.left + "," + this.options.margins.top + ")")
 					.attr("id", "chart");
 			},
-
-			createaxis: function (dataset) {
+			setDataset: function (dataset) {
 				this.dataset = dataset;
+				return this;
+			},
 
-				this.priceExtent = d3.extent(dataset.models,
+			createaxis: function () {
+
+				this.priceExtent = d3.extent(this.dataset.models,
 					function (d) {
 						return (parseFloat(d.get("High")) + parseFloat(d.get("High"))) / 2;
 					});
 
-				this.dateExtent = d3.extent(dataset.models,
+				this.dateExtent = d3.extent(this.dataset.models,
 					function (d) {
 						return d.get("Date");
 					});
@@ -81,7 +84,7 @@ define(function (require) {
 
 				return this;
 			},
-			creategraph: function (dataset) {
+			creategraph: function () {
 				this.area = d3.svg.area()
 					.x(function (d) {return this.xScale(d.get("Date")); })
 					.y0(this.chartDimensions.height)
@@ -102,15 +105,26 @@ define(function (require) {
 
 				this.areagraph.append("path")
 					.attr("clip-path", "url(#clip)")
-					.attr("d", this.area(dataset.models));
+					.attr("d", this.area(this.dataset.models));
 
 				return this;
 			},
-
 			adjustXAxis: function (params) {
 				this.xScale.domain([this.dataset.at(this.dataset.models.length - params.min - 1).get("Date"), this.dataset.at(this.dataset.models.length - params.max).get("Date")]);
 				d3.select(".x.axis").call(this.xAxis);
 				d3.select("#stock path").attr("d", this.area(this.dataset.models));
+			},
+			showMovingAverage: function (n) {
+				console.log("from svg view ", n);
+			},
+			hideMovingAverage: function () {
+
+			},
+			showBollinger: function (n) {
+
+			},
+			hideBoolinger: function () {
+
 			}
 		});
 

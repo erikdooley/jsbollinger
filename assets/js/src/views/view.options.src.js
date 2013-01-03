@@ -23,20 +23,37 @@ define(function (require) {
 
 			applyUI: function () {
 				$("input", $(this.view)).button();
-				$("[id*='slider']").slider();
+				$("[id*='slider']").slider({
+					min: 2,
+					value: 2,
+					max: 200
+				});
 				return this;
 			},
 
-			buttonHandler: function (ev) {
-				$(".ui-slider", $(ev.target).parent()).slideToggle(200);
+			titleHandler: function (ev) {
+				var target = $(ev.target),
+					targetClass =  target.attr('class').split(' ')[0],
+					evData;
+
+				if (target.hasClass('active')) {
+					this.trigger('hideOption', targetClass);
+				} else {
+					this.trigger('showOption', targetClass, $(".ui-slider", target.parent()).slider('values', 0));
+				}
+
+				$(".slider", target.parent()).slideToggle(200);
+				target.toggleClass('active');
+
 			},
 
 			sliderHandler: function (ev, ui) {
-				console.log("blah slider", ev.target, ui);
+				$(ev.target).prev().html(ui.value + "days");
+				this.trigger($(ev.target).attr('id'), ui.value);
 			},
 
 			bindListeners: function () {
-				$("input", $(this.view)).on("change", $.proxy(this.buttonHandler, this));
+				$("h3", $(this.view)).on("click", $.proxy(this.titleHandler, this));
 				$(".ui-slider").on("slide", $.proxy(this.sliderHandler, this));
 				return this;
 			}

@@ -21,6 +21,14 @@
 .options h2 {
 	margin-top: 0;
 }
+.options h3 {
+	cursor: pointer;
+	padding: 0 0 0 16px;
+	background: url(img/optionsInactive.png) no-repeat 0px 0px;
+}
+.options h3.active {
+	background: url(img/optionsActive.png) no-repeat 0px 0px;
+}
 .options section {
 	border-bottom: 1px solid #ccc;
 	padding: 20px 0 0 0;
@@ -28,8 +36,14 @@
 .options .ui-button {
 	margin-bottom: 20px;
 }
-.options .ui-slider {
+.options .slider {
 	display: none;
-	margin-bottom: 20px
+}
+.options .ui-slider {
+	margin-bottom: 20px;
+	width: 80%;
+}
+.options .value {
+	float: right;
 }
 
