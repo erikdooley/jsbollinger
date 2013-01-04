@@ -40,7 +40,10 @@ define(function (require) {
 				this.dataset = dataset;
 				return this;
 			},
-
+			bindListeners: function () {
+				this.dataset.on("moving-average-ready", this.renderMovingAverage, this);
+				return this;
+			},
 			createaxis: function () {
 
 				this.priceExtent = d3.extent(this.dataset.models,
@@ -112,7 +115,24 @@ define(function (require) {
 			adjustXAxis: function (params) {
 				this.xScale.domain([this.dataset.at(this.dataset.models.length - params.min - 1).get("Date"), this.dataset.at(this.dataset.models.length - params.max).get("Date")]);
 				d3.select(".x.axis").call(this.xAxis);
+
 				d3.select("#stock path").attr("d", this.area(this.dataset.models));
+				d3.select("#moving-average-graph path").attr("d", this.movingAverageLine(this.dataset.models));
+			},
+			renderMovingAverage: function (n) {
+				d3.select('#moving-average-graph').remove();
+				this.movingAverageLine = d3.svg.line()
+					.x(function (d) {return this.xScale(d.get("Date")); })
+					.y(function (d) {return this.yScale(d.get("average_" + n + "_Close")); })
+					.interpolate("linear");
+
+				this.movingAverageGraph = d3.select('#chart')
+					.append('g')
+					.attr('id', 'moving-average-graph');
+
+				this.movingAverageGraph.append('path')
+					.attr('clip-path', 'url(#clip)')
+					.attr('d', this.movingAverageLine(this.dataset.models));
 			},
 			showMovingAverage: function (n) {
 				this.dataset.makeAverage(n, 'Close');
@@ -123,7 +143,7 @@ define(function (require) {
 			showBollinger: function (n) {
 
 			},
-			hideBoolinger: function () {
+			hideBollinger: function () {
 
 			}
 		});

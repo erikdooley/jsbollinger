@@ -44,8 +44,7 @@ define(function (require) {
 
 					this.at(i).set("average_" + n + "_" + property, tmp, {silent: true});
 				}
-				this.trigger("moving-average-ready");
-				console.log('moving-average-ready');
+				this.trigger("moving-average-ready", n);
 			},
 			getCSVdata: function (url, callback) {
 				d3.csv(url, callback);

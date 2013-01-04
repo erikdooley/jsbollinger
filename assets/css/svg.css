@@ -37,3 +37,8 @@ path.area {
 	fill: rgba(200, 200, 230, 0.5);
 	stroke: rgba(180, 180, 180, 0.5);
 }
+
+#moving-average-graph path {
+	fill: none;
+	stroke: rgba(125, 0, 0, 0.5);
+}

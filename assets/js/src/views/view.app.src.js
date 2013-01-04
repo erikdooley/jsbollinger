@@ -19,7 +19,8 @@ define(function (require) {
 
 				svgview.setDataset(dataset)
 					.createaxis()
-					.creategraph();
+					.creategraph()
+					.bindListeners();
 
 				optionsView.init('.secondary');
 
