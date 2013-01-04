@@ -115,7 +115,7 @@ define(function (require) {
 				d3.select("#stock path").attr("d", this.area(this.dataset.models));
 			},
 			showMovingAverage: function (n) {
-				console.log("from svg view ", n);
+				this.dataset.makeAverage(n, 'Close');
 			},
 			hideMovingAverage: function () {
 
