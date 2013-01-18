@@ -27,10 +27,12 @@ define(function (require) {
 			makeAverage: function (n, property) {
 
 				var i, l, model, tmp;
-				// Throw error if the property is missing
-				if (!this.at(0).has(property)) {
-					throw new Error(property + " property can not be found on collection model");
+
+				if (this.at(0).has("average_" + n + "_" + property)) {
+					return this;
 				}
+
+				this.checkProperty(property);
 
 				this.at(0).set("average_" + n + "_" + property, this.at(0).get(property), {silent: true});
 
@@ -45,6 +47,34 @@ define(function (require) {
 					this.at(i).set("average_" + n + "_" + property, tmp, {silent: true});
 				}
 				this.trigger("moving-average-ready", n);
+			},
+			makeSigmaSquared: function (n, property) {
+
+				var i, l, model, tmp;
+
+				this.checkProperty(property);
+
+				this.makeAverage(n, property);
+
+				_.each(this.models, function (model, index) {
+					if ( index === 0 ) {
+						this.at(0).set("ssigma_" + n + "_" + property, 0), {silent: true});
+					} else {
+						if ( index < n) {
+							tmp = this.at(index - 1).get("ssigma_" + n + "_" + property) - Math.pow((this.at(index)))
+						} else {
+
+						}
+					}
+				});
+
+				//this.at(0).set('ssigma_' + n + '_' + property, )
+			},
+			checkProperty: function (property) {
+				if (!this.at(0).has(property)) {
+					throw new Error(property + " property can not be found on collection model");
+				}
+				return;
 			},
 			getCSVdata: function (url, callback) {
 				d3.csv(url, callback);

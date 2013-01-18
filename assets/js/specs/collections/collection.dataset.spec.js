@@ -52,5 +52,28 @@ define(function (require) {
 			});
 
 		});
+
+		describe("its makeSigmaSquared", function() {
+
+			it("should be a function", function() {
+				expect(typeof collection.makeSigmaSquared).toEqual("function");
+			});
+
+			it("should create a new property in the underlying model with name ssigma_n_property", function() {
+				collection.makeSigmaSquared(2, "high");
+				expect(collection.at(Math.floor(Math.random() * collection.length)).has('ssigma_2_high')).toBeTruthy();
+			});
+
+
+
+
+		});
+
+		describe("its checkProperty method", function() {
+
+			it("should be a function", function() {
+				
+			});
+		});
 	});
 });
