@@ -29,6 +29,7 @@ define(function (require) {
 				var i, l, model, tmp;
 
 				if (this.at(0).has("average_" + n + "_" + property)) {
+					this.trigger("moving-average-ready", {n: n, property: property});
 					return this;
 				}
 
@@ -46,7 +47,7 @@ define(function (require) {
 
 					this.at(i).set("average_" + n + "_" + property, tmp, {silent: true});
 				}
-				this.trigger("moving-average-ready", n);
+				this.trigger("moving-average-ready", {n: n, property: property});
 			},
 			makeSigmaSquared: function (n, property) {
 
@@ -59,18 +60,18 @@ define(function (require) {
 
 
 				_.each(this.models, function (model, index) {
-					if ( index === 0 ) {
+					if (index === 0) {
 						model.set("ssigma_" + n + "_" + property, 0, {silent: true});
 					} else {
 						tmp = models[index - 1].get("ssigma_" + n + "_" + property);
-						tmp = tmp + Math.pow( models[index].get(property) - models[index].get('average_'+ n + '_' +property), 2) / index;
-						if ( index > n) {
-							tmp = tmp - Math.pow( models[index - n - 1].get(property) - models[index - n - 1].get('average_'+ n + '_' +property), 2) / index;
+						tmp = tmp + Math.pow(models[index].get(property) - models[index].get('average_' + n + '_' + property), 2) / index;
+						if (index > n) {
+							tmp = tmp - Math.pow(models[index - n - 1].get(property) - models[index - n - 1].get('average_' + n + '_' + property), 2) / index;
 						}
 						model.set("ssigma_" + n + "_" + property, tmp, {silent: true});
 					}
 				});
-				this.trigger('sigma-squared-ready', n);
+				this.trigger('sigma-squared-ready', {n: n, property: property});
 			},
 			checkProperty: function (property) {
 				if (!this.at(0).has(property)) {

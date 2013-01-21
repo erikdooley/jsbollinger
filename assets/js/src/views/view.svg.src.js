@@ -41,7 +41,8 @@ define(function (require) {
 				return this;
 			},
 			bindListeners: function () {
-				//this.dataset.on("moving-average-ready", this.renderMovingAverage, this);
+				this.dataset.on('moving-average-ready', this.renderMovingAverage, this);
+				this.dataset.on('sigma-squared-ready', this.renderBollinger, this);
 				return this;
 			},
 			createaxis: function () {
@@ -117,13 +118,20 @@ define(function (require) {
 				d3.select(".x.axis").call(this.xAxis);
 
 				d3.select("#stock path").attr("d", this.area(this.dataset.models));
-				d3.select("#moving-average-graph path").attr("d", this.movingAverageLine(this.dataset.models));
+
+				if (d3.select("#moving-average-graph path").length) {
+					d3.select("#moving-average-graph path").attr("d", this.movingAverageLine(this.dataset.models));
+				}
+
+				if (d3.select("#bollinger-graph path").length) {
+					d3.select("#bollinger-graph path").attr("d", this.bollingerBandsArea(this.dataset.models));
+				}
 			},
-			renderMovingAverage: function (n) {
+			renderMovingAverage: function (opt) {
 				d3.select('#moving-average-graph').remove();
 				this.movingAverageLine = d3.svg.line()
 					.x(function (d) {return this.xScale(d.get("Date")); })
-					.y(function (d) {return this.yScale(d.get("average_" + n + "_Close")); })
+					.y(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property)); })
 					.interpolate("linear");
 
 				this.movingAverageGraph = d3.select('#chart')
@@ -134,17 +142,37 @@ define(function (require) {
 					.attr('clip-path', 'url(#clip)')
 					.attr('d', this.movingAverageLine(this.dataset.models));
 			},
-			showMovingAverage: function (n) {
-				this.dataset.makeAverage(n, 'Close');
+			renderBollinger: function (opt) {
+				d3.select('#bollinger-graph').remove();
+				this.bollingerBandsArea = d3.svg.area()
+					.x(function (d) {return this.xScale(d.get("Date")); })
+					.y0(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property) + 1.9 * Math.sqrt(d.get('ssigma_' + opt.n + '_' + opt.property))); })
+					.y1(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property) - 1.9 * Math.sqrt(d.get('ssigma_' + opt.n + '_' + opt.property))); })
+					.interpolate('linear');
+
+				this.bollingerGraph = d3.select('#chart')
+					.append('g')
+					.attr('id', 'bollinger-graph');
+
+				this.bollingerGraph.append('path')
+					.attr('clip-path', 'url(#clip)')
+					.attr('d', this.bollingerBandsArea(this.dataset.models));
+			},
+			showMovingAverage: function (n, property) {
+				this.dataset.makeAverage(n, property);
 			},
 			hideMovingAverage: function () {
-
+				if (d3.select("#moving-average-graph path").length) {
+					d3.select("#moving-average-graph path").remove();
+				}
 			},
-			showBollinger: function (n) {
-
+			showBollinger: function (n, property) {
+				this.dataset.makeSigmaSquared(n, property);
 			},
 			hideBollinger: function () {
-
+				if (d3.select("#bollinger-graph path").length) {
+					d3.select("#bollinger-graph path").remove();
+				}
 			}
 		});
 

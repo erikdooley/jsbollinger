@@ -33,11 +33,11 @@ define(function (require) {
 				optionsView.on('showOption', function (option, value) {
 					switch (option) {
 					case 'moving-average':
-						svgview.showMovingAverage(value);
+						svgview.showMovingAverage(value, "High");
 						break;
 
 					case 'bollinger':
-						svgview.showBollinger(value);
+						svgview.showBollinger(value, "High");
 						break;
 					}
 				}, this);
@@ -52,8 +52,8 @@ define(function (require) {
 						break;
 					}
 				}, this);
-				optionsView.on('moving-average-slider', function (value) {svgview.showMovingAverage(value); }, this);
-				optionsView.on('bollinger-slider', function (value) {console.log('from moving-average slider handler', value); }, this);
+				optionsView.on('moving-average-slider', function (value) {svgview.showMovingAverage(value, "High"); }, this);
+				optionsView.on('bollinger-slider', function (value) {svgview.showBollinger(value, "High"); }, this);
 			},
 
 			adjustXAxis: function (params) {

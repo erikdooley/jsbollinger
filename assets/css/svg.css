@@ -42,3 +42,8 @@ path.area {
 	fill: none;
 	stroke: rgba(125, 0, 0, 0.5);
 }
+
+#bollinger-graph path {
+	fill: rgba(220, 220, 220, 0.5);
+	stroke: rgba(200, 200, 200, 0.7);
+}
