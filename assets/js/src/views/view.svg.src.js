@@ -41,7 +41,7 @@ define(function (require) {
 				return this;
 			},
 			bindListeners: function () {
-				this.dataset.on("moving-average-ready", this.renderMovingAverage, this);
+				//this.dataset.on("moving-average-ready", this.renderMovingAverage, this);
 				return this;
 			},
 			createaxis: function () {

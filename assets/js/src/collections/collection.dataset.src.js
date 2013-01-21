@@ -1,4 +1,4 @@
-/*global define:false, Backbone: false, $:false, d3:false */
+/*global define:false, Backbone: false, $:false, d3:false, _:false */
 define(function (require) {
 	"use strict";
 	var Dot = require("../models/model.dot.src"),
@@ -50,25 +50,27 @@ define(function (require) {
 			},
 			makeSigmaSquared: function (n, property) {
 
-				var i, l, model, tmp;
+				var i, l, model, tmp,
+					models = this.models;
 
 				this.checkProperty(property);
 
 				this.makeAverage(n, property);
 
+
 				_.each(this.models, function (model, index) {
 					if ( index === 0 ) {
-						this.at(0).set("ssigma_" + n + "_" + property, 0), {silent: true});
+						model.set("ssigma_" + n + "_" + property, 0, {silent: true});
 					} else {
-						if ( index < n) {
-							tmp = this.at(index - 1).get("ssigma_" + n + "_" + property) - Math.pow((this.at(index)))
-						} else {
-
+						tmp = models[index - 1].get("ssigma_" + n + "_" + property);
+						tmp = tmp + Math.pow( models[index].get(property) - models[index].get('average_'+ n + '_' +property), 2) / index;
+						if ( index > n) {
+							tmp = tmp - Math.pow( models[index - n - 1].get(property) - models[index - n - 1].get('average_'+ n + '_' +property), 2) / index;
 						}
+						model.set("ssigma_" + n + "_" + property, tmp, {silent: true});
 					}
 				});
-
-				//this.at(0).set('ssigma_' + n + '_' + property, )
+				this.trigger('sigma-squared-ready', n);
 			},
 			checkProperty: function (property) {
 				if (!this.at(0).has(property)) {
