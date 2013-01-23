@@ -119,11 +119,11 @@ define(function (require) {
 
 				d3.select("#stock path").attr("d", this.area(this.dataset.models));
 
-				if (d3.select("#moving-average-graph path").length) {
+				if ($("#moving-average-graph path").length) {
 					d3.select("#moving-average-graph path").attr("d", this.movingAverageLine(this.dataset.models));
 				}
 
-				if (d3.select("#bollinger-graph path").length) {
+				if ($("#bollinger-graph path").length) {
 					d3.select("#bollinger-graph path").attr("d", this.bollingerBandsArea(this.dataset.models));
 				}
 			},
