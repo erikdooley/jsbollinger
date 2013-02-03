@@ -114,16 +114,16 @@ define(function (require) {
 				return this;
 			},
 			adjustXAxis: function (params) {
-				this.xScale.domain([this.dataset.at(this.dataset.models.length - params.min - 1).get("Date"), this.dataset.at(this.dataset.models.length - params.max).get("Date")]);
+				this.xScale.domain([this.dataset.at(params.min).get("Date"), this.dataset.at(params.max).get("Date")]);
 				d3.select(".x.axis").call(this.xAxis);
 
 				d3.select("#stock path").attr("d", this.area(this.dataset.models));
 
-				if (d3.select("#moving-average-graph path").length) {
+				if ($("#moving-average-graph path").length) {
 					d3.select("#moving-average-graph path").attr("d", this.movingAverageLine(this.dataset.models));
 				}
 
-				if (d3.select("#bollinger-graph path").length) {
+				if ($("#bollinger-graph path").length) {
 					d3.select("#bollinger-graph path").attr("d", this.bollingerBandsArea(this.dataset.models));
 				}
 			},
@@ -146,8 +146,8 @@ define(function (require) {
 				d3.select('#bollinger-graph').remove();
 				this.bollingerBandsArea = d3.svg.area()
 					.x(function (d) {return this.xScale(d.get("Date")); })
-					.y0(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property) + 1.9 * Math.sqrt(d.get('ssigma_' + opt.n + '_' + opt.property))); })
-					.y1(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property) - 1.9 * Math.sqrt(d.get('ssigma_' + opt.n + '_' + opt.property))); })
+					.y0(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property) + 2 * Math.sqrt(d.get('ssigma_' + opt.n + '_' + opt.property))); })
+					.y1(function (d) {return this.yScale(d.get("average_" + opt.n + "_" + opt.property) - 2 * Math.sqrt(d.get('ssigma_' + opt.n + '_' + opt.property))); })
 					.interpolate('linear');
 
 				this.bollingerGraph = d3.select('#chart')

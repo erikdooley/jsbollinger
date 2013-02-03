@@ -11,7 +11,7 @@ define(function (require) {
 					entry;
 
 				for (index in result) {
-					entry				= result[index];
+					entry				= result[result.length - index - 1];
 					entry.High			= +entry.High;
 					entry.Low			= +entry.Low;
 					entry.Open			= +entry.Open;
